@@ -227,6 +227,19 @@ iframe {
   margin: 0 auto;
 }
 
+.welcome{
+  display: flex;
+  margin: auto;
+}
+
+.welcome-message{
+  margin: auto;
+}
+
+.exit{
+  font-size: 20px;
+}
+
 .container-login {
   width: 100%;
   display: -webkit-box;

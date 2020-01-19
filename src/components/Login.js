@@ -1,17 +1,14 @@
 import React from "react";
 import RightSide from "./RightSide/index";
 
-const Main = () => {
+const Login = (props) => {
   return (
     <div className="limiter">
       <div className="container-login">
-        <div className="wrap-login">
-          <RightSide />
-          <div className="login-more"></div>
+          <RightSide {...props} />
         </div>
-      </div>
     </div>
   );
 };
 
-export default Main;
+export default Login;

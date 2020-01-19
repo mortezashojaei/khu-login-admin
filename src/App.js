@@ -1,9 +1,33 @@
 import React from "react";
 import "./App.css";
 import "./utils/utils.css";
-import Main from "./components/Main";
-function App() {
-  return <Main />;
-}
+import Login from "./components/Login";
+import MainPage from "./components/MainPage";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import PrivateRoute from "./Authentication/PrivateRoute";
+import AuthenticatedHeader from "./components/AuthenticatedHeader";
+import AuthProvider from "./Authentication/AuthProvider";
+import Interceptor from "./Interceptor";
 
-export default App;
+export default function App() {
+  return (
+    <Router>
+      <AuthProvider>
+        <Interceptor>
+          <AuthenticatedHeader />
+          <Switch>
+            <PrivateRoute path="/main">
+              <MainPage />
+            </PrivateRoute>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="*">
+              <Login />
+            </Route>
+          </Switch>
+        </Interceptor>
+      </AuthProvider>
+    </Router>
+  );
+}
