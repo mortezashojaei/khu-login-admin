@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import "./utils/utils.css";
-import Login from "./components/Login";
+import Login from "./components/LoginPage";
 import MainPage from "./components/MainPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./Authentication/PrivateRoute";
