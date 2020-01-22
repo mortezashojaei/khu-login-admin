@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import AuthContext from "./Context";
 import { useContext, useEffect } from "react";
 
@@ -22,11 +22,13 @@ export const useAuth = () => {
     loginUrl
   } = useContext(AuthContext);
   const history = useHistory();
+  const location = useLocation();
 
   function login(token) {
     setSession(token, tokenKey);
     setIsAuthenticated(true);
-    history.push(mainPageUrl);
+    let { from } = location.state || { from: { pathname: mainPageUrl } };
+    history.replace(from);
   }
   function logout() {
     setSession(null, tokenKey);
@@ -36,8 +38,8 @@ export const useAuth = () => {
 
   useEffect(() => {
     const token = localStorage.getItem(tokenKey);
-    if (token && !isAuthenticated) {
-      login(token);
+    if (!token) {
+      logout();
     }
   }, []);
 

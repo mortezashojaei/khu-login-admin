@@ -8,7 +8,7 @@ const AuthProvider = ({
   mainPageUrl = "/main",
   loginUrl = "/login"
 }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   return (
     <AuthContext.Provider
