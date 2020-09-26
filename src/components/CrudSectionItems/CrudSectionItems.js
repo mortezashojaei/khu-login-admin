@@ -8,14 +8,14 @@ import CRUDTable, {
 
 import {
   addItem as addItemApi,
-  getAllSections,
+  getAllItems,
   updateItem as updateItemApi,
 } from "../../API";
 
 const CrudSectionItems = ({ selectedSection }) => {
   const [items, setItems] = useState([]);
   function fetchItems() {
-    getAllSections().then((response) => {
+    getAllItems().then((response) => {
       setItems(response.data.data);
     });
   }

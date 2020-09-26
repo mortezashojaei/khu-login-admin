@@ -4,6 +4,8 @@ const BASE_URL = "http://localhost:5050/api/v1/";
 
 export const login = (data) => Axios.post(`${BASE_URL}user/auth/admin`, data);
 
+export const getAllItems = () => Axios.post(`${BASE_URL}items/get-all-items`);
+
 export const addItem = (data) => Axios.post(`${BASE_URL}items/add-item`, data);
 
 export const updateItem = (data) =>
