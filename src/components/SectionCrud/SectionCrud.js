@@ -3,10 +3,16 @@ import CRUDTable, {
   Fields,
   Field,
   CreateForm,
-  UpdateForm
+  UpdateForm,
 } from "react-crud-table";
 import SelectSection from "../SelectSection";
-import axios from "axios";
+import {
+  addSection,
+  getAllSections,
+  updateSection,
+  changeActiveSections as changeActiveSectionsApi,
+  getActiveSections as getActiveSectionsApi,
+} from "../../API";
 
 const CrudSectionItems = () => {
   const [items, setItems] = useState([]);
@@ -14,53 +20,43 @@ const CrudSectionItems = () => {
   const [activeSectionTwo, setActiveSectionTwo] = useState();
 
   function fetchItems() {
-    axios
-      .post("http://localhost:3000/api/v1/sections/get-all-sections")
-      .then(response => {
-        setItems(response.data.data);
-      });
+    getAllSections().then((response) => {
+      setItems(response.data.data);
+    });
   }
 
   function addItem(item) {
-    return axios
-      .post("http://localhost:3000/api/v1/sections/add-section", item)
-      .then(response => {
-        fetchItems();
-        return response.data;
-      });
+    return addSection(item).then((response) => {
+      fetchItems();
+      return response.data;
+    });
   }
 
   function updateItem(item) {
-    return axios
-      .post("http://localhost:3000/api/v1/sections/modify-section", item)
-      .then(response => {
-        fetchItems();
-        return response.data;
-      });
+    return updateSection(item).then((response) => {
+      fetchItems();
+      return response.data;
+    });
   }
 
   function getActiveSections() {
-    axios
-      .post("http://localhost:3000/api/v1/sections/get-active-sections")
-      .then(response => {
-        setActiveSectionOne(response.data.data[0].section._id);
-        setActiveSectionTwo(response.data.data[1].section._id);
-      });
+    getActiveSectionsApi().then((response) => {
+      setActiveSectionOne(response.data.data[0].section._id);
+      setActiveSectionTwo(response.data.data[1].section._id);
+    });
   }
 
   function changeActiveSections() {
-    axios
-      .post("http://localhost:3000/api/v1/sections/modify-active-sections", {
-        section_one: activeSectionOne,
-        section_two: activeSectionTwo
-      })
-      .then(response => {
-        getActiveSections();
-      });
+    changeActiveSectionsApi({
+      section_one: activeSectionOne,
+      section_two: activeSectionTwo,
+    }).then(() => {
+      getActiveSections();
+    });
   }
 
   const styles = {
-    container: { margin: "auto", width: "fit-content" }
+    container: { margin: "auto", width: "fit-content" },
   };
 
   useEffect(() => {
@@ -94,7 +90,7 @@ const CrudSectionItems = () => {
         <CRUDTable
           caption="بخش های صفحه لاگین"
           actionsLabel="عملیات"
-          items={items.map(item => item)}
+          items={items.map((item) => item)}
         >
           <Fields>
             <Field name="title" label="عنوان" />
@@ -102,14 +98,14 @@ const CrudSectionItems = () => {
           <CreateForm
             title="ایجاد آیتم"
             trigger="ایجاد"
-            onSubmit={item => addItem(item)}
+            onSubmit={(item) => addItem(item)}
             submitText="ایجاد آیتم"
           />
 
           <UpdateForm
             title="ویرایش آیتم"
             trigger="ویرایش"
-            onSubmit={item => updateItem(item)}
+            onSubmit={(item) => updateItem(item)}
             submitText="ویرایش"
           />
         </CRUDTable>

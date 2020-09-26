@@ -3,46 +3,45 @@ import CRUDTable, {
   Fields,
   Field,
   CreateForm,
-  UpdateForm
+  UpdateForm,
 } from "react-crud-table";
-import axios from "axios";
+
+import {
+  addItem as addItemApi,
+  getAllSections,
+  updateItem as updateItemApi,
+} from "../../API";
 
 const CrudSectionItems = ({ selectedSection }) => {
   const [items, setItems] = useState([]);
   function fetchItems() {
-    axios
-      .post("http://localhost:3000/api/v1/items/get-all-items")
-      .then(response => {
-        setItems(response.data.data);
-      });
+    getAllSections().then((response) => {
+      setItems(response.data.data);
+    });
   }
 
   function addItem(item) {
-    return axios
-      .post("http://localhost:3000/api/v1/items/add-item", {
-        ...item,
-        section: selectedSection
-      })
-      .then(response => {
-        fetchItems();
-        return response.data;
-      });
+    return addItemApi({
+      ...item,
+      section: selectedSection,
+    }).then((response) => {
+      fetchItems();
+      return response.data;
+    });
   }
 
   function updateItem(item) {
-    return axios
-      .post("http://localhost:3000/api/v1/items/modify-item", {
-        ...item,
-        section: selectedSection
-      })
-      .then(response => {
-        fetchItems();
-        return response.data;
-      });
+    return updateItemApi({
+      ...item,
+      section: selectedSection,
+    }).then((response) => {
+      fetchItems();
+      return response.data;
+    });
   }
 
   const styles = {
-    container: { margin: "auto", width: "fit-content" }
+    container: { margin: "auto", width: "fit-content" },
   };
 
   useEffect(() => {
@@ -55,11 +54,11 @@ const CrudSectionItems = ({ selectedSection }) => {
         caption="آیتم های صفحه لاگین"
         actionsLabel="عملیات"
         items={items
-          .filter(item => item.section == selectedSection)
-          .map(item => ({
+          .filter((item) => item.section == selectedSection)
+          .map((item) => ({
             ...item,
             is_active_status: item.is_active ? "فعال" : "غیرفعال",
-            is_pinned_status: item.is_pinned ? "اولویت بالا" : "بدون اولویت"
+            is_pinned_status: item.is_pinned ? "اولویت بالا" : "بدون اولویت",
           }))}
       >
         <Fields>
@@ -85,21 +84,21 @@ const CrudSectionItems = ({ selectedSection }) => {
         <CreateForm
           title="ایجاد آیتم"
           trigger="ایجاد"
-          onSubmit={item => addItem(item)}
+          onSubmit={(item) => addItem(item)}
           submitText="ایجاد آیتم"
         />
 
         <UpdateForm
           title="ویرایش آیتم"
           trigger="ویرایش"
-          onSubmit={item => updateItem(item)}
+          onSubmit={(item) => updateItem(item)}
           submitText="ویرایش"
         />
 
         <UpdateForm
           title="بازیابی از آرشیو"
           trigger="بازیابی "
-          onSubmit={item => updateItem(item)}
+          onSubmit={(item) => updateItem(item)}
           submitText="بازیابی از آرشیو"
         />
       </CRUDTable>
