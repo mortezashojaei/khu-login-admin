@@ -19,7 +19,7 @@ const SelectSection = ({ value, onChange }) => {
       onChange={(e) => {
         onChange(e.target.value);
       }}
-      className="m-l-r-auto"
+      className="m-l-64 m-r-64"
     >
       <option value="" disabled selected>
         بخش مورد نظر خود را انتخاب نمایید

@@ -3,7 +3,8 @@ import "./App.css";
 import "./utils/utils.css";
 import Login from "./components/LoginPage";
 import MainPage from "./components/MainPage";
-import SectionCrud from "./components/SectionCrud/SectionCrud"
+import SectionCrud from "./components/SectionCrud/SectionCrud";
+import { ActiveSections } from "./components/ActiveSections";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./Authentication/PrivateRoute";
 import AuthenticatedHeader from "./components/AuthenticatedHeader";
@@ -22,6 +23,9 @@ export default function App() {
             </PrivateRoute>
             <PrivateRoute path="/sections">
               <SectionCrud />
+            </PrivateRoute>
+            <PrivateRoute path="/active-sections">
+              <ActiveSections />
             </PrivateRoute>
             <Route path="/login">
               <Login />
