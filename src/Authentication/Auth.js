@@ -19,7 +19,7 @@ export const useAuth = () => {
     setIsAuthenticated,
     tokenKey,
     mainPageUrl,
-    loginUrl
+    loginUrl,
   } = useContext(AuthContext);
   const history = useHistory();
   const location = useLocation();
@@ -38,8 +38,8 @@ export const useAuth = () => {
 
   useEffect(() => {
     const token = localStorage.getItem(tokenKey);
-    if (!token) {
-      logout();
+    if (token) {
+      login(token);
     }
   }, []);
 
