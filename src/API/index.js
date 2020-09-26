@@ -25,3 +25,5 @@ export const getActiveSections = () =>
 
 export const changeActiveSections = (data) =>
   Axios.post(`${BASE_URL}sections/modify-active-sections`, data);
+
+export const fetchNews = () => Axios.post(`${BASE_URL}fetch-news`);
